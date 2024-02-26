@@ -1,4 +1,4 @@
-(function() {
+javascript:(function() {
     var script = document.createElement("script");
     script.src = "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js";
     document.head.appendChild(script);
@@ -13,7 +13,7 @@
                     setTimeout(function() {
                         fetch(imageLink, {
                             headers: {
-                                "Referer": window.location.href
+                                "Referer": document.location.href
                             }
                         })
                         .then(response => response.text())
@@ -22,8 +22,7 @@
                             var doc = parser.parseFromString(html, "text/html");
                             var image = doc.querySelector("#image img");
                             if (image) {
-                                var imageUrl = image.getAttribute("src");
-                                imageUrl = imageUrl.replace("http:", "https:");
+                                var imageUrl = image.getAttribute("src").replace("http://", "https://");
                                 imageURLs.push(imageUrl);
                                 console.log("Received image: " + imageUrl);
                                 resolve();
@@ -45,7 +44,7 @@
                 imageFetchPromises.push(
                     fetch(imageUrl, {
                         headers: {
-                            "Referer": window.location.href
+                            "Referer": document.location.href
                         }
                     })
                     .then(response => response.blob())
